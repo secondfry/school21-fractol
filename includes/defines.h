@@ -13,13 +13,12 @@
 #ifndef DEFINES_H
 # define DEFINES_H
 
-# include <stdlib.h>
 # include "libft.h"
 
 # define WIDTH 1280
 # define HEIGHT 720
 # define TITLE "fract-ol"
-#define M_LN2_F 0.693147180559945309417232121458176568f
+# define M_LN2_F 0.693147180559945309417232121458176568f
 # define M_PI_F 3.14159265358979323846264338327950288f
 # define M_PI_2F 1.57079632679489661923132169163975144f
 # define M_PI_4F 0.785398163397448309615660845819875721f
@@ -28,14 +27,14 @@
 # define SSIZE_T_MAX ((0ul - 1ul) >> 1ul)
 # define SSIZE_T_MIN (SSIZE_T_MAX + 1ul)
 
+# define PALETTE 3
+# define HORIZON (1u << 16u)
+# define MAX_ITERATIONS 100
+
 # define EINVAL 22
 
-//typedef float		*t_matrix_4;
-//typedef float		*t_vector_4;
-//typedef float		*t_quaterion;
-//typedef const float	*t_const_matrix_4;
-//typedef const float	*t_const_vector_4;
-//typedef const float	*t_const_quaterion;
+typedef t_byte	*t_color;
+
 typedef int			(*t_mlx_hook)();
 
 typedef struct		s_fractol
@@ -47,45 +46,18 @@ typedef struct		s_fractol
 	size_t		size_line_int;
 	size_t		size_line_char;
 	t_ushort	**iteration;
-//	t_ushort	flags;
-//	t_byte		options;
-//	t_vector_4	camera_position;
-//	t_vector_4	camera_rotation;
-//	t_matrix_4	matrix_local_normalization;
-//	t_matrix_4	matrix_local_scale;
-//	t_matrix_4	matrix_local_rotation;
-//	t_matrix_4	matrix_local_translation;
-//	t_matrix_4	matrix_world_translation;
-//	t_matrix_4	matrix_world_rotation;
-//	t_matrix_4	matrix_world_projection;
-//	t_vector_4	matrix_world_projection_properties;
-//	t_matrix_4	matrix_view;
-//	float		**points;
-//	t_byte		*heights;
-//	size_t		point_count;
-//	t_ushort	frame[3];
-//	size_t		cols;
-//	size_t		rows;
-//	size_t		height;
-//	ssize_t		floor;
+	double		**iterationD;
+	size_t		*iterationPixels;
+	float		**hue;
+	t_byte		options;
+	t_byte		flags;
 }				t_fractol;
 
-//# define FLAG_INVALIDATE_LOCAL_NORMALIZATION	1u << 0u
-//# define FLAG_INVALIDATE_LOCAL_SCALE			1u << 1u
-//# define FLAG_INVALIDATE_LOCAL_ROTATION			1u << 3u
-//# define FLAG_INVALIDATE_LOCAL_TRANSLATION		1u << 2u
-//# define FLAG_INVALIDATE_WORLD_TRANSLATION		1u << 4u
-//# define FLAG_INVALIDATE_WORLD_ROTATION			1u << 5u
-//# define FLAG_INVALIDATE_WORLD_PROJECTION		1u << 6u
-//# define FLAG_INVALIDATE_VIEW					1u << 7u
-//# define FLAG_REDRAW							1u << 8u
-//
-//# define OPTION_ENABLE_PERSPECTIVE				1u << 0u
-//# define OPTION_ENABLE_ROTATION					1u << 1u
-//# define OPTION_ISOMETRIC						1u << 2u
-//# define OPTION_ROTATION_X						1u << 3u
-//# define OPTION_ROTATION_Y						1u << 4u
-//# define OPTION_ROTATION_Z						1u << 5u
+# define OPTION_MANDELBROT_STEPWISE		(1u << 0u)
+# define OPTION_MANDELBROT_GRAYSCALE	(1u << 1u)
+# define OPTION_MANDELBROT_COLOR		(1u << 2u)
+
+# define FLAG_REDRAW					(1u << 0u)
 
 # define EVENT_KEY_PRESS						2
 # define EVENT_KEY_RELEASE						3

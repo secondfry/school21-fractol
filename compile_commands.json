@@ -1455,5 +1455,105 @@
    "srcs/main.c"
   ],
   "file": "srcs/main.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/color.o",
+   "srcs/color.c"
+  ],
+  "file": "srcs/color.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/mandelbrot.o",
+   "srcs/mandelbrot.c"
+  ],
+  "file": "srcs/mandelbrot.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/utilities.o",
+   "srcs/utilities.c"
+  ],
+  "file": "srcs/utilities.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/mlx_init.o",
+   "srcs/mlx_init.c"
+  ],
+  "file": "srcs/mlx_init.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/loop_hooks_1.o",
+   "srcs/loop_hooks_1.c"
+  ],
+  "file": "srcs/loop_hooks_1.c"
  }
 ]

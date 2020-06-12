@@ -12,7 +12,7 @@
 
 SHELL = /bin/zsh
 
-NAME = fract-ol
+NAME = fractol
 SRCS_DIR = ./srcs
 INCLUDES_DIR = ./includes
 OBJS_DIR = ./objs
@@ -20,7 +20,11 @@ OBJS_DIR = ./objs
 LIB = libft.a
 LIB_DIR = ./libft
 
-SRC_FILES =	main.c
+SRC_FILES =	main.c utilities.c \
+			mlx_init.c \
+			color.c \
+			mandelbrot.c \
+			loop_hooks_1.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC_FILES))
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o, $(SRCS))
