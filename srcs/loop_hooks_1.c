@@ -15,25 +15,11 @@ int		loop_hook(t_fractol *ftol)
 	return (0);
 }
 
-#include <math.h>
-
 void	loop_mandelbrot_palette(t_fractol *ftol)
 {
-	t_byte	major;
-	t_byte	minor;
-	t_color	color[3];
-
 	if (!(ftol->options & OPTION_MANDELBROT_ANIMATED))
 		return;
-	ft_memdel((void **)ftol->mandelbrot->animated_palette + 0);
-	ft_memdel((void **)ftol->mandelbrot->animated_palette + 1);
-	ft_memdel((void **)ftol->mandelbrot->animated_palette + 2);
-	ftol->mandelbrot->animated_palette[0] = color_lerp(ftol->mandelbrot->palette[0], ftol->mandelbrot->palette[1], (float)ftol->frame / 255);
-	ftol->mandelbrot->animated_palette[1] = color_lerp(ftol->mandelbrot->palette[1], ftol->mandelbrot->palette[2], (float)ftol->frame / 255);
-	ftol->mandelbrot->animated_palette[2] = color_lerp(ftol->mandelbrot->palette[2], ftol->mandelbrot->palette[0], (float)ftol->frame / 255);
-	color[1] = color_lerp(ftol->mandelbrot->palette[1], ftol->mandelbrot->palette[2], (float)ftol->frame / 255);
-	color[2] = color_lerp(ftol->mandelbrot->palette[2], ftol->mandelbrot->palette[0], (float)ftol->frame / 255);
-	ftol->frame = ftol->frame + 10;
+	ftol->color_cycle += 1;
 	ftol->flags |= FLAG_REDRAW;
 }
 

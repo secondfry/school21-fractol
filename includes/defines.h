@@ -41,7 +41,6 @@ typedef struct		s_mandelbrot
 {
 	double			log2_log_h;
 	t_color			*palette;
-	t_color			*animated_palette;
 	double			horizon;
 	double			kx;
 	double			ky;
@@ -60,7 +59,7 @@ typedef struct		s_fractol
 	t_byte			options;
 	t_byte			flags;
 	t_mandelbrot	*mandelbrot;
-	t_byte			frame;
+	double			color_cycle;
 }					t_fractol;
 
 # define OPTION_MANDELBROT_STEPWISE		(1u << 0u)

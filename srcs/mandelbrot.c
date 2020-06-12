@@ -108,12 +108,13 @@ int			mandelbrot_color(size_t iteration, t_fractol *ftol, double z2)
 
 	if (ftol->options & OPTION_MANDELBROT_ANIMATED)
 	{
-		color1 = ftol->mandelbrot->animated_palette[(int)smth % PALETTE];
-		color2 = ftol->mandelbrot->animated_palette[((int)smth + 1) % PALETTE];
-	} else {
-		color1 = ftol->mandelbrot->palette[(int)smth % PALETTE];
-		color2 = ftol->mandelbrot->palette[((int)smth + 1) % PALETTE];
+		smth += ftol->color_cycle;
 	}
+
+	smth = pow(smth, 0.4);
+
+	color1 = ftol->mandelbrot->palette[(int)smth % PALETTE];
+	color2 = ftol->mandelbrot->palette[((int)smth + 1) % PALETTE];
 
 	f = fmod(smth, 1.f);
 	c[0] = color1[0] + f * (color2[0] - color1[0]);

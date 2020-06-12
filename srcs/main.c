@@ -25,10 +25,6 @@ t_mandelbrot	*init_mandelbrot()
 	ret->palette[0] = color_new(255, 0, 0);
 	ret->palette[1] = color_new(0, 255, 0);
 	ret->palette[2] = color_new(0, 0, 255);
-	ret->animated_palette = (t_color *)malloc(sizeof(t_color) * PALETTE);
-	ret->animated_palette[0] = color_new(255, 0, 0);
-	ret->animated_palette[1] = color_new(0, 255, 0);
-	ret->animated_palette[2] = color_new(0, 0, 255);
 	ret->kx = 3.5f / WIDTH;
 	ret->ky = -2.f / HEIGHT;
 	ret->ox = -2.5f;
@@ -42,7 +38,7 @@ void			init_fractol(t_fractol *ftol)
 	ftol->options = OPTION_MANDELBROT_COLOR | OPTION_MANDELBROT_ANIMATED;
 	ftol->flags = FLAG_REDRAW;
 	ftol->mandelbrot = init_mandelbrot();
-	ftol->frame = 0;
+	ftol->color_cycle = 0;
 }
 
 int				main(int argc, char **argv)
