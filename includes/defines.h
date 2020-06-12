@@ -28,7 +28,7 @@
 # define SSIZE_T_MIN (SSIZE_T_MAX + 1ul)
 
 # define PALETTE 3
-# define HORIZON (1u << 16u)
+# define DEFAULT_HORIZON (1u << 16u)
 # define MAX_ITERATIONS 100
 
 # define EINVAL 22
@@ -37,21 +37,36 @@ typedef t_byte	*t_color;
 
 typedef int			(*t_mlx_hook)();
 
+typedef struct		s_mandelbrot
+{
+	double			log2_log_h;
+	t_color			*palette;
+	t_color			*animated_palette;
+	double			horizon;
+	double			kx;
+	double			ky;
+	double			ox;
+	double			oy;
+}					t_mandelbrot;
+
 typedef struct		s_fractol
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	int			*img_data;
-	size_t		size_line_int;
-	size_t		size_line_char;
-	t_byte		options;
-	t_byte		flags;
-}				t_fractol;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	int				*img_data;
+	size_t			size_line_int;
+	size_t			size_line_char;
+	t_byte			options;
+	t_byte			flags;
+	t_mandelbrot	*mandelbrot;
+	t_byte			frame;
+}					t_fractol;
 
 # define OPTION_MANDELBROT_STEPWISE		(1u << 0u)
 # define OPTION_MANDELBROT_GRAYSCALE	(1u << 1u)
 # define OPTION_MANDELBROT_COLOR		(1u << 2u)
+# define OPTION_MANDELBROT_ANIMATED		(1u << 3u)
 
 # define FLAG_REDRAW					(1u << 0u)
 

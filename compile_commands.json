@@ -1555,5 +1555,25 @@
    "srcs/loop_hooks_1.c"
   ],
   "file": "srcs/loop_hooks_1.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/loop_hooks_2.o",
+   "srcs/loop_hooks_2.c"
+  ],
+  "file": "srcs/loop_hooks_2.c"
  }
 ]

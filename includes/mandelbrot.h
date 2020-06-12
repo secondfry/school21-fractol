@@ -14,7 +14,12 @@ t_byte		mandelbrot_cutoff(
 	double x,
 	double y
 );
-double		mandelbrot_escape_time(size_t *iteration, t_ushort sx, t_ushort sy);
+double		mandelbrot_escape_time(
+	size_t *iteration,
+	t_ushort sx,
+	t_ushort sy,
+	t_mandelbrot *mandelbrot
+);
 void		mandelbrot(t_fractol *ftol, t_ushort sx, t_ushort sy);
 
 #endif
