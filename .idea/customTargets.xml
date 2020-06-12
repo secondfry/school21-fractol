@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="aa9f69bd-ef3d-49e6-967e-8efa1bc71e59" name="umkd" projectName="school21-fractol">
+      <configuration id="f013785b-7299-4659-aff6-3b83081fb1a3" name="umkd" toolchainName="Default">
+        <build type="TOOL">
+          <tool actionId="Tool_External Tools_md" />
+        </build>
+        <clean type="TOOL">
+          <tool actionId="Tool_External Tools_mc" />
+        </clean>
+      </configuration>
+    </target>
+  </component>
+</project>
