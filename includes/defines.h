@@ -45,10 +45,6 @@ typedef struct		s_fractol
 	int			*img_data;
 	size_t		size_line_int;
 	size_t		size_line_char;
-	t_ushort	**iteration;
-	double		**iterationD;
-	size_t		*iterationPixels;
-	float		**hue;
 	t_byte		options;
 	t_byte		flags;
 }				t_fractol;

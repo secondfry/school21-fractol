@@ -18,9 +18,6 @@ int		loop_hook(t_fractol *ftol)
 		return (0);
 
 	ft_bzero(ftol->img_data, ftol->size_line_char * HEIGHT);
-	for (size_t i = 0; i < HEIGHT; i++) {
-		ft_bzero(ftol->iteration[i], sizeof(t_ushort) * WIDTH);
-	}
 
 	for (size_t y = 0; y < HEIGHT; y++) {
 		for (size_t x = 0; x < WIDTH; x++) {
