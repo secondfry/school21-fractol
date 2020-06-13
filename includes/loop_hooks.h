@@ -1,6 +1,14 @@
-//
-// Created by Rustam Gubaydullin on 12/06/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   loop_hooks.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oadhesiv <oadhesiv@student.21-school.ru>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/13 16:10:10 by oadhesiv          #+#    #+#             */
+/*   Updated: 2020/06/13 16:22:42 by oadhesiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef LOOP_HOOKS_H
 # define LOOP_HOOKS_H
@@ -22,5 +30,6 @@ int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol);
 int		loop_mouse_move_hook(int x, int y, t_fractol *ftol);
 void	loop_render_hud_1(t_fractol *ftol);
 void	loop_render_hud_2(t_fractol *ftol);
+void	loop_render_hud_3(t_fractol *ftol);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: oadhesiv <oadhesiv@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 14:04:51 by oadhesiv          #+#    #+#             */
-/*   Updated: 2020/06/07 07:23:11 by oadhesiv         ###   ########.fr       */
+/*   Updated: 2020/06/13 16:24:30 by oadhesiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 
 # define PALETTE 3
 # define DEFAULT_HORIZON (1u << 24u)
-# define MANDELBROT_BASE_ITERATIONS 50
-# define TRICORNE_BASE_ITERATIONS 150
-# define BURNING_BASE_ITERATIONS 14
-# define JULIA_BASE_ITERATIONS 250
+# define MANDELBROT_BASE_ITS 50
+# define TRICORNE_BASE_ITS 150
+# define BURNING_BASE_ITS 14
+# define JULIA_BASE_ITS 250
 # define ZOOM_ITERATIONS 50
 
 # define EINVAL 22
@@ -51,10 +51,11 @@ typedef struct		s_ftol_data
 	double			ky;
 	double			ox;
 	double			oy;
-	size_t			base_iterations;
-	size_t			zoom_iterations;
-	size_t			final_iterations;
-	double			(*escape_time)(size_t *, t_ushort, t_ushort, struct s_ftol_data *);
+	size_t			base_its;
+	size_t			zoom_its;
+	size_t			final_its;
+	double			(*escape_time)(
+		size_t *, t_ushort, t_ushort, struct s_ftol_data *);
 	double			julia_zr;
 	double			julia_zi;
 }					t_ftol_data;
