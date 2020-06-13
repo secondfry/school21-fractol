@@ -30,20 +30,24 @@ SRCS = $(addprefix $(SRCS_DIR)/, $(SRC_FILES))
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o, $(SRCS))
 DEPS = $(OBJS:.o=.d)
 
-ifeq ($(origin CC), default)
-CC = clang
-endif
-
 ifeq ($(OS),Windows_NT)
 # huh lol
 else
 	UNAME_S := $(shell uname -s)
 	ifeq ($(UNAME_S),Linux)
+		ifeq ($(origin CC), default)
+		CC = gcc
+		endif
+
 		MLX = libmlx.a
 		MLX_DIR = ./minilibx
 		LDFLAGS += -lX11 -lXext -lm
 	endif
 	ifeq ($(UNAME_S),Darwin)
+		ifeq ($(origin CC), default)
+		CC = clang
+		endif
+
 		UNAME_R := $(shell uname -r | cut -d. -f1)
 		VER := $(shell test $(UNAME_R) -ge 17 && echo 'new' || echo 'old')
 		ifeq ($(VER),new)
@@ -58,7 +62,7 @@ else
 	endif
 endif
 
-CFLAGS_ERRORS = -Wall -Wextra
+CFLAGS_ERRORS = -Wall -Wextra -Werror
 CFLAGS_OPTIMIZATIONS = -O3 -funroll-loops
 CFLAGS_DEPENDENCIES = -MMD -MP
 CFLAGS_INCLUDES = -I$(INCLUDES_DIR) -I$(LIB_DIR) -I$(MLX_DIR)
