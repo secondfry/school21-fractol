@@ -34,6 +34,8 @@ t_ftol_data		*init_data()
 	ret->zoom_iterations = ZOOM_ITERATIONS;
 	ret->final_iterations = ret->base_iterations + ret->zoom_iterations;
 	ret->escape_time = mandelbrot_escape_time;
+	ret->julia_zr = -0.4;
+	ret->julia_zi = 0.6;
 	return (ret);
 }
 

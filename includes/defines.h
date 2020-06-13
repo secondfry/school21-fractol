@@ -55,6 +55,8 @@ typedef struct		s_ftol_data
 	size_t			zoom_iterations;
 	size_t			final_iterations;
 	double			(*escape_time)(size_t *, t_ushort, t_ushort, struct s_ftol_data *);
+	double			julia_zr;
+	double			julia_zi;
 }					t_ftol_data;
 
 typedef struct		s_fractol

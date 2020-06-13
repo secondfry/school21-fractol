@@ -23,7 +23,7 @@ t_byte		cutoff(
 		period = 0;
 		return (0);
 	}
-	if (absdiv(x, oldx) < 0.001 && absdiv(y, oldy) < 0.001) {
+	if (absdiv(x, oldx) < 0.0001 && absdiv(y, oldy) < 0.0001) {
 		*iteration = data->final_iterations;
 		return (1);
 	}
@@ -43,24 +43,21 @@ double		julia_escape_time(
 	t_ftol_data *data
 )
 {
-	double c[2];
 	double x;
 	double y;
 	double x2;
 	double y2;
 
-	c[0] = -0.4; // control these with mouse
-	c[1] = 0.6; // control these with mouse
-	x = (double)sx * 4 / WIDTH - 2;
-	y = (double)sy * -4 / HEIGHT + 2;
+	x = (double)sx * data->kx + data->ox;
+	y = (double)sy * data->ky + data->oy;
 	*iteration = 0;
 	x2 = x * x;
 	y2 = y * y;
 	cutoff(1, iteration, 0, 0, data);
 	while (x * x + y * y <= 4 && *iteration < data->final_iterations)
 	{
-		y = 2 * x * y + c[1];
-		x = x2 - y2 + c[0];
+		y = 2 * x * y + data->julia_zi;
+		x = x2 - y2 + data->julia_zr;
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;

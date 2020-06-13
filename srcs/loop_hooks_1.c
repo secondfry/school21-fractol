@@ -79,10 +79,7 @@ int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol)
 
 int		loop_mouse_move_hook(int x, int y, t_fractol *ftol)
 {
-	ft_putnbr(x);
-	ft_putendl("");
-	ft_putnbr(y);
-	ft_putendl("");
-	ft_putendl("");
+	ftol->data->julia_zr = 2.f * x / WIDTH - 1;
+	ftol->data->julia_zi = 2.f * y / HEIGHT - 1;
 	return (0);
 }

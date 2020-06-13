@@ -43,10 +43,6 @@ int		loop_key_hook(int keycode, t_fractol *ftol)
 	ftol->data->zoom_iterations < 10 ? ftol->data->zoom_iterations = 10 : 0;
 	ftol->data->final_iterations = ftol->data->base_iterations + ftol->data->zoom_iterations;
 	ftol->flags |= FLAG_REDRAW;
-	//	keycode == KEY_G ? reset_rotation(fdf) : 0;
-	//	keycode == KEY_Z ? fdf->options ^= OPTION_ROTATION_X : 0;
-	//	keycode == KEY_X ? fdf->options ^= OPTION_ROTATION_Y : 0;
-	//	keycode == KEY_C ? fdf->options ^= OPTION_ROTATION_Z : 0;
 	return (0);
 }
 
