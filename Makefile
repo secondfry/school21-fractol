@@ -94,7 +94,7 @@ all:
 	cp $(MLX_DIR)/$(MLX) $(MLX)
 	@echo -n $(DEFAULT)
 
-	@echo $(CYAN) "Making fdf" $(DEFAULT)
+	@echo $(CYAN) "Making fractol" $(DEFAULT)
 	@echo -n $(GREEN)
 	$(MAKE) $(NAME)
 	@echo -n $(DEFAULT)
@@ -123,7 +123,7 @@ clean_libs:
 	@echo -n $(DEFAULT)
 
 clean_self:
-	@echo $(CYAN) "Cleaning fdf" $(DEFAULT)
+	@echo $(CYAN) "Cleaning fractol" $(DEFAULT)
 	@echo -n $(GREEN)
 	if [ -d "$(OBJS_DIR)" ]; then rm -rfv $(OBJS_DIR); fi
 	@echo -n $(DEFAULT)
@@ -143,7 +143,7 @@ fclean_libs: clean_libs
 	@echo -n $(DEFAULT)
 
 fclean_self: clean_self
-	@echo $(CYAN) "Purging fdf" $(DEFAULT)
+	@echo $(CYAN) "Purging fractol" $(DEFAULT)
 	@echo -n $(GREEN)
 	if [ -f "$(NAME)" ]; then rm -rfv $(NAME); fi
 	@echo -n $(DEFAULT)
