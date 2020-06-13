@@ -36,6 +36,112 @@ t_byte		mandelbrot_cutoff(
 	return (0);
 }
 
+double		julia_escape_time(
+	size_t *iteration,
+	t_ushort sx,
+	t_ushort sy,
+	t_mandelbrot *mandelbrot
+)
+{
+	double c[2];
+	double x;
+	double y;
+	double x2;
+	double y2;
+
+	c[0] = -0.4; // control these with mouse
+	c[1] = 0.6; // control these with mouse
+	x = (double)sx * 4 / WIDTH - 2;
+	y = (double)sy * -4 / HEIGHT + 2;
+	*iteration = 0;
+	x2 = x * x;
+	y2 = y * y;
+	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
+	while (x * x + y * y <= 4 && *iteration < mandelbrot->max_iterations)
+	{
+		y = 2 * x * y + c[1];
+		x = x2 - y2 + c[0];
+		x2 = x * x;
+		y2 = y * y;
+		*iteration = *iteration + 1;
+		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+			break;
+	}
+	return (x2 + y2);
+}
+
+double		tricorne_escape_time(
+	size_t *iteration,
+	t_ushort sx,
+	t_ushort sy,
+	t_mandelbrot *mandelbrot
+)
+{
+	double c[2];
+	double x;
+	double y;
+	double x2;
+	double y2;
+
+	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
+	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
+	x = c[0];
+	y = c[1];
+	*iteration = 0;
+	x2 = x * x;
+	y2 = y * y;
+	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
+	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
+	{
+		y = -2 * x * y + c[1];
+		x = x2 - y2 + c[0];
+		x2 = x * x;
+		y2 = y * y;
+		*iteration = *iteration + 1;
+		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+			break;
+	}
+	return (x2 + y2);
+}
+
+double dabs(double v) {
+	return v < 0 ? -v : v;
+}
+
+double		burning_escape_time(
+	size_t *iteration,
+	t_ushort sx,
+	t_ushort sy,
+	t_mandelbrot *mandelbrot
+)
+{
+	double c[2];
+	double x;
+	double y;
+	double x2;
+	double y2;
+
+	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
+	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
+	x = c[0];
+	y = c[1];
+	*iteration = 0;
+	x2 = x * x;
+	y2 = y * y;
+	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
+	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
+	{
+		y = dabs(2 * x * y + c[1]);
+		x = dabs(x2 - y2 + c[0]);
+		x2 = x * x;
+		y2 = y * y;
+		*iteration = *iteration + 1;
+		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+			break;
+	}
+	return (x2 + y2);
+}
+
 double		mandelbrot_escape_time(
 	size_t *iteration,
 	t_ushort sx,
@@ -51,16 +157,16 @@ double		mandelbrot_escape_time(
 
 	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
 	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
-	x = 0;
-	y = 0;
+	x = c[0];
+	y = c[1];
 	*iteration = 0;
-	x2 = 0;
-	y2 = 0;
+	x2 = x * x;
+	y2 = y * y;
 	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
-	while (x2 + y2 <= mandelbrot->horizon && *iteration < mandelbrot->max_iterations)
+	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
 	{
-		y = 2 * x * y + c[1];
-		x = x2 - y2 + c[0];
+		y = dabs(2 * x * y + c[1]);
+		x = dabs(x2 - y2 + c[0]);
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;

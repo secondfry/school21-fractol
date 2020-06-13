@@ -29,7 +29,7 @@
 
 # define PALETTE 3
 # define DEFAULT_HORIZON (1u << 16u)
-# define MAX_ITERATIONS 100
+# define MAX_ITERATIONS 64
 
 # define EINVAL 22
 
