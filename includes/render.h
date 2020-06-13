@@ -1,6 +1,14 @@
-//
-// Created by Rustam Gubaydullin on 12/06/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: oadhesiv <oadhesiv@student.21-school.ru>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/13 16:10:10 by oadhesiv          #+#    #+#             */
+/*   Updated: 2020/06/13 16:51:49 by oadhesiv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
@@ -13,7 +21,6 @@
 # include "utilities.h"
 
 t_byte		cutoff(
-	t_byte init,
 	size_t *iteration,
 	double x,
 	double y,

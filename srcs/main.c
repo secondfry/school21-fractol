@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: oadhesiv <oadhesiv@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/29 14:00:03 by oadhesiv          #+#    #+#             */
-/*   Updated: 2020/06/01 06:03:56 by oadhesiv         ###   ########.fr       */
+/*   Created: 2020/06/13 16:10:10 by oadhesiv          #+#    #+#             */
+/*   Updated: 2020/06/13 16:41:36 by oadhesiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-t_ftol_data		*init_data()
+t_ftol_data	*init_data(void)
 {
 	t_ftol_data	*ret;
 
@@ -30,16 +30,16 @@ t_ftol_data		*init_data()
 	ret->ky = -1 * ret->zoom;
 	ret->ox = -3.25f;
 	ret->oy = ret->zoom * HEIGHT / 2.f;
-	ret->base_iterations = MANDELBROT_BASE_ITERATIONS;
-	ret->zoom_iterations = ZOOM_ITERATIONS;
-	ret->final_iterations = ret->base_iterations + ret->zoom_iterations;
+	ret->base_its = MANDELBROT_BASE_ITS;
+	ret->zoom_its = ZOOM_ITERATIONS;
+	ret->final_its = ret->base_its + ret->zoom_its;
 	ret->escape_time = mandelbrot_escape_time;
 	ret->julia_zr = -0.4;
 	ret->julia_zi = 0.6;
 	return (ret);
 }
 
-void			init_fractol(t_fractol *ftol)
+void		init_fractol(t_fractol *ftol)
 {
 	ftol->options = OPTION_COLOR | OPTION_ANIMATED;
 	ftol->flags = FLAG_REDRAW;
@@ -47,25 +47,51 @@ void			init_fractol(t_fractol *ftol)
 	ftol->color_cycle = 0;
 }
 
-int				main(int argc, char **argv)
+void		print_usage(char *name)
+{
+	ft_putstr("Usage: ");
+	ft_putstr(name);
+	ft_putendl(" (mandelbrot|julia|burning_ship|tricorne)");
+}
+
+void		input(t_fractol *ftol, char **argv)
+{
+	if (ft_strequ(argv[1], "mandelbrot"))
+		ftol->data->escape_time = mandelbrot_escape_time;
+	else if (ft_strequ(argv[1], "julia"))
+		ftol->data->escape_time = julia_escape_time;
+	else if (ft_strequ(argv[1], "burning_ship"))
+		ftol->data->escape_time = burning_escape_time;
+	else if (ft_strequ(argv[1], "tricorne"))
+		ftol->data->escape_time = tricorne_escape_time;
+	else
+	{
+		print_usage(argv[0]);
+		exit(EINVAL);
+	}
+}
+
+int			main(int argc, char **argv)
 {
 	t_fractol	ftol;
 
-//	if (argc != 2)
-//	{
-//		ft_putendl_fd("Provide one valid map file argument, please.", 2);
-//		return (EINVAL);
-//	}
-//	init_pipeline(&ftol);
-//	input(&ftol, argv[argc - 1]);
-	init_mlx(&ftol);
+	if (argc != 2)
+	{
+		print_usage(argv[0]);
+		return (EINVAL);
+	}
 	init_fractol(&ftol);
-	mlx_hook(ftol.win, EVENT_KEY_PRESS, MASK_KEY_PRESS, loop_key_hook, &ftol);
-	mlx_hook(ftol.win, EVENT_BUTTON_PRESS, MASK_BUTTON_PRESS, &loop_mouse_click_hook, &ftol);
-	mlx_hook(ftol.win, EVENT_MOTION_NOTIFY, MASK_POINTER_MOTION, &loop_mouse_move_hook, &ftol);
-	mlx_hook(ftol.win, EVENT_DESTROY, MASK_DESTROY, loop_destroy_hook, &ftol);
+	input(&ftol, argv);
+	init_mlx(&ftol);
+	mlx_hook(ftol.win, EVENT_KEY_PRESS, MASK_KEY_PRESS,
+		loop_key_hook, &ftol);
+	mlx_hook(ftol.win, EVENT_BUTTON_PRESS, MASK_BUTTON_PRESS,
+		&loop_mouse_click_hook, &ftol);
+	mlx_hook(ftol.win, EVENT_MOTION_NOTIFY, MASK_POINTER_MOTION,
+		&loop_mouse_move_hook, &ftol);
+	mlx_hook(ftol.win, EVENT_DESTROY, MASK_DESTROY,
+		loop_destroy_hook, &ftol);
 	mlx_loop_hook(ftol.mlx, loop_hook, &ftol);
 	mlx_loop(ftol.mlx);
-
-	return (ft_atoi(argv[argc - 1]));
+	return (0);
 }
