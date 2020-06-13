@@ -12,6 +12,14 @@
 
 #include "render.h"
 
+/*
+** https://blog.datalore.io/how_to_plot_mandelbrot_set/
+** https://en.wikipedia.org/wiki/Plotting_algorithms_for_the_Mandelbrot_set
+** https://en.wikipedia.org/wiki/Julia_set
+** https://en.wikipedia.org/wiki/Tricorn_(mathematics)
+** https://en.wikipedia.org/wiki/Burning_Ship_fractal
+*/
+
 t_byte		cutoff(
 	size_t *iteration,
 	double x,
