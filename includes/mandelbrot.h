@@ -5,14 +5,19 @@
 #ifndef MANDELBROT_H
 # define MANDELBROT_H
 
+# include <stdlib.h>
+# include <math.h>
 # include "libft.h"
 # include "defines.h"
+# include "color.h"
+# include "utilities.h"
 
 t_byte		mandelbrot_cutoff(
 	t_byte init,
 	size_t *iteration,
 	double x,
-	double y
+	double y,
+	t_mandelbrot *mandelbrot
 );
 double		mandelbrot_escape_time(
 	size_t *iteration,

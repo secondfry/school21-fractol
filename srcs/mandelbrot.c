@@ -2,18 +2,14 @@
 // Created by Rustam Gubaydullin on 12/06/2020.
 //
 
-#include <stdlib.h>
-#include <math.h>
-#include <color.h>
-#include "utilities.h"
-
 #include "mandelbrot.h"
 
 t_byte		mandelbrot_cutoff(
 	t_byte init,
 	size_t *iteration,
 	double x,
-	double y
+	double y,
+	t_mandelbrot *mandelbrot
 )
 {
 	static double	oldx;
@@ -28,7 +24,7 @@ t_byte		mandelbrot_cutoff(
 		return (0);
 	}
 	if (absdiv(x, oldx) < 0.001 && absdiv(y, oldy) < 0.001) {
-		*iteration = MAX_ITERATIONS;
+		*iteration = mandelbrot->max_iterations;
 		return (1);
 	}
 	period++;
@@ -60,15 +56,15 @@ double		mandelbrot_escape_time(
 	*iteration = 0;
 	x2 = 0;
 	y2 = 0;
-	mandelbrot_cutoff(1, iteration, 0, 0);
-	while (x2 + y2 <= mandelbrot->horizon && *iteration < MAX_ITERATIONS)
+	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
+	while (x2 + y2 <= mandelbrot->horizon && *iteration < mandelbrot->max_iterations)
 	{
 		y = 2 * x * y + c[1];
 		x = x2 - y2 + c[0];
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;
-		if (mandelbrot_cutoff(0, iteration, x, y))
+		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
 			break;
 	}
 	return (x2 + y2);
@@ -88,7 +84,7 @@ int			mandelbrot_grayscale(size_t iteration, t_fractol *ftol, double z2)
 	if (log_zn <= 0)
 		log_zn = 1;
 	smth = iteration - log2(log_zn) + ftol->mandelbrot->log2_log_h;
-	return ((int)(255 * smth / MAX_ITERATIONS) * 0x10101 & 0x00ffffff);
+	return ((int)(255 * smth / ftol->mandelbrot->max_iterations) * 0x10101 & 0x00ffffff);
 }
 
 int			mandelbrot_color(size_t iteration, t_fractol *ftol, double z2)
@@ -131,7 +127,7 @@ void		mandelbrot(t_fractol *ftol, t_ushort sx, t_ushort sy)
 
 	iteration = 0;
 	z2 = mandelbrot_escape_time(&iteration, sx, sy, ftol->mandelbrot);
-	if (iteration >= MAX_ITERATIONS)
+	if (iteration >= ftol->mandelbrot->max_iterations)
 		ftol->img_data[sx + sy * ftol->size_line_int] = 0x0;
 	else if (ftol->options & OPTION_MANDELBROT_STEPWISE)
 		ftol->img_data[sx + sy * ftol->size_line_int] = mandelbrot_stepwise(iteration);

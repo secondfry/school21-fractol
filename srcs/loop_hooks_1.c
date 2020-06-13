@@ -52,3 +52,35 @@ void	loop_before_next_update(t_fractol *ftol)
 	if (ftol->options & OPTION_MANDELBROT_ANIMATED)
 		ftol->flags |= FLAG_REDRAW;
 }
+
+#include <stdio.h>
+
+void	calculate_offset(t_mandelbrot *mandelbrot, int mouseX, int mouseY)
+{
+	mandelbrot->ox += (double)mouseX * (mandelbrot->kx - mandelbrot->zoom);
+	mandelbrot->oy += (double)(HEIGHT - mouseY) * (mandelbrot->ky + mandelbrot->zoom);
+	mandelbrot->kx = mandelbrot->zoom;
+	mandelbrot->ky = -1 * mandelbrot->zoom;
+}
+
+int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol)
+{
+	mousecode == MOUSE_WHEEL_OUT ? ftol->mandelbrot->zoom *= 1.2 : 0;
+	mousecode == MOUSE_WHEEL_OUT ? ftol->mandelbrot->max_iterations-- : 0;
+	mousecode == MOUSE_WHEEL_IN ? ftol->mandelbrot->zoom *= 0.8 : 0;
+	mousecode == MOUSE_WHEEL_IN ? ftol->mandelbrot->max_iterations++ : 0;
+	ftol->mandelbrot->max_iterations < 1 ? ftol->mandelbrot->max_iterations = 1 : 0;
+	calculate_offset(ftol->mandelbrot, x, y);
+	ftol->flags |= FLAG_REDRAW;
+	return (0);
+}
+
+int		loop_mouse_move_hook(int x, int y, t_fractol *ftol)
+{
+	ft_putnbr(x);
+	ft_putendl("");
+	ft_putnbr(y);
+	ft_putendl("");
+	ft_putendl("");
+	return (0);
+}

@@ -42,10 +42,12 @@ typedef struct		s_mandelbrot
 	double			log2_log_h;
 	t_color			*palette;
 	double			horizon;
+	double			zoom;
 	double			kx;
 	double			ky;
 	double			ox;
 	double			oy;
+	size_t			max_iterations;
 }					t_mandelbrot;
 
 typedef struct		s_fractol
@@ -84,6 +86,7 @@ typedef struct		s_fractol
 # define MASK_KEY_RELEASE						1ul << 1u
 # define MASK_BUTTON_PRESS						1ul << 2u
 # define MASK_BUTTON_RELEASE					1ul << 3u
+# define MASK_POINTER_MOTION					1ul << 6u
 # define MASK_EXPOSE							1ul << 15u
 # define MASK_DESTROY							1ul << 17u
 
@@ -119,5 +122,10 @@ typedef struct		s_fractol
 #  define KEY_Z									122
 #  define KEY_ESC								65307
 # endif
+
+# define MOUSE_1								1
+# define MOUSE_2								2
+# define MOUSE_WHEEL_OUT							5
+# define MOUSE_WHEEL_IN						4
 
 #endif

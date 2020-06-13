@@ -18,5 +18,7 @@ int		loop_key_hook(int keycode, t_fractol *ftol);
 void	loop_mandelbrot_palette(t_fractol *ftol);
 void	loop_fractol(t_fractol *ftol);
 void	loop_before_next_update(t_fractol *ftol);
+int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol);
+int		loop_mouse_move_hook(int x, int y, t_fractol *ftol);
 
 #endif
