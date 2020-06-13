@@ -23,8 +23,8 @@ LIB_DIR = ./libft
 SRC_FILES =	main.c utilities.c \
 			mlx_init.c \
 			color.c \
-			mandelbrot.c \
-			loop_hooks_1.c loop_hooks_2.c
+			render.c \
+			loop_hooks_1.c loop_hooks_2.c loop_hooks_3.c
 
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRC_FILES))
 OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o, $(SRCS))

@@ -2,14 +2,14 @@
 // Created by Rustam Gubaydullin on 12/06/2020.
 //
 
-#include "mandelbrot.h"
+#include "render.h"
 
-t_byte		mandelbrot_cutoff(
+t_byte		cutoff(
 	t_byte init,
 	size_t *iteration,
 	double x,
 	double y,
-	t_mandelbrot *mandelbrot
+	t_ftol_data *data
 )
 {
 	static double	oldx;
@@ -24,7 +24,7 @@ t_byte		mandelbrot_cutoff(
 		return (0);
 	}
 	if (absdiv(x, oldx) < 0.001 && absdiv(y, oldy) < 0.001) {
-		*iteration = mandelbrot->max_iterations;
+		*iteration = data->final_iterations;
 		return (1);
 	}
 	period++;
@@ -40,7 +40,7 @@ double		julia_escape_time(
 	size_t *iteration,
 	t_ushort sx,
 	t_ushort sy,
-	t_mandelbrot *mandelbrot
+	t_ftol_data *data
 )
 {
 	double c[2];
@@ -56,15 +56,15 @@ double		julia_escape_time(
 	*iteration = 0;
 	x2 = x * x;
 	y2 = y * y;
-	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
-	while (x * x + y * y <= 4 && *iteration < mandelbrot->max_iterations)
+	cutoff(1, iteration, 0, 0, data);
+	while (x * x + y * y <= 4 && *iteration < data->final_iterations)
 	{
 		y = 2 * x * y + c[1];
 		x = x2 - y2 + c[0];
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;
-		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+		if (cutoff(0, iteration, x, y, data))
 			break;
 	}
 	return (x2 + y2);
@@ -74,7 +74,7 @@ double		tricorne_escape_time(
 	size_t *iteration,
 	t_ushort sx,
 	t_ushort sy,
-	t_mandelbrot *mandelbrot
+	t_ftol_data *data
 )
 {
 	double c[2];
@@ -83,22 +83,22 @@ double		tricorne_escape_time(
 	double x2;
 	double y2;
 
-	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
-	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
+	c[0] = sx * data->kx + data->ox;
+	c[1] = sy * data->ky + data->oy;
 	x = c[0];
 	y = c[1];
 	*iteration = 0;
 	x2 = x * x;
 	y2 = y * y;
-	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
-	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
+	cutoff(1, iteration, 0, 0, data);
+	while (x2 + y2 <= 4 && *iteration < data->final_iterations)
 	{
 		y = -2 * x * y + c[1];
 		x = x2 - y2 + c[0];
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;
-		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+		if (cutoff(0, iteration, x, y, data))
 			break;
 	}
 	return (x2 + y2);
@@ -112,7 +112,7 @@ double		burning_escape_time(
 	size_t *iteration,
 	t_ushort sx,
 	t_ushort sy,
-	t_mandelbrot *mandelbrot
+	t_ftol_data *data
 )
 {
 	double c[2];
@@ -121,22 +121,22 @@ double		burning_escape_time(
 	double x2;
 	double y2;
 
-	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
-	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
+	c[0] = sx * data->kx + data->ox;
+	c[1] = sy * data->ky + data->oy;
 	x = c[0];
 	y = c[1];
 	*iteration = 0;
 	x2 = x * x;
 	y2 = y * y;
-	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
-	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
+	cutoff(1, iteration, 0, 0, data);
+	while (x2 + y2 <= 4 && *iteration < data->final_iterations)
 	{
 		y = dabs(2 * x * y + c[1]);
 		x = dabs(x2 - y2 + c[0]);
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;
-		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+		if (cutoff(0, iteration, x, y, data))
 			break;
 	}
 	return (x2 + y2);
@@ -146,7 +146,7 @@ double		mandelbrot_escape_time(
 	size_t *iteration,
 	t_ushort sx,
 	t_ushort sy,
-	t_mandelbrot *mandelbrot
+	t_ftol_data *data
 )
 {
 	double c[2];
@@ -155,33 +155,33 @@ double		mandelbrot_escape_time(
 	double x2;
 	double y2;
 
-	c[0] = sx * mandelbrot->kx + mandelbrot->ox;
-	c[1] = sy * mandelbrot->ky + mandelbrot->oy;
-	x = c[0];
-	y = c[1];
+	c[0] = sx * data->kx + data->ox;
+	c[1] = sy * data->ky + data->oy;
+	x = 0;
+	y = 0;
 	*iteration = 0;
 	x2 = x * x;
 	y2 = y * y;
-	mandelbrot_cutoff(1, iteration, 0, 0, mandelbrot);
-	while (x2 + y2 <= 4 && *iteration < mandelbrot->max_iterations)
+	cutoff(1, iteration, 0, 0, data);
+	while (x2 + y2 <= data->horizon && *iteration < data->final_iterations)
 	{
-		y = dabs(2 * x * y + c[1]);
-		x = dabs(x2 - y2 + c[0]);
+		y = 2 * x * y + c[1];
+		x = x2 - y2 + c[0];
 		x2 = x * x;
 		y2 = y * y;
 		*iteration = *iteration + 1;
-		if (mandelbrot_cutoff(0, iteration, x, y, mandelbrot))
+		if (cutoff(0, iteration, x, y, data))
 			break;
 	}
 	return (x2 + y2);
 }
 
-int			mandelbrot_stepwise(size_t iteration)
+int			color_stepwise(size_t iteration)
 {
 	return ((int)(iteration * 0x111111) & 0x00ffffff);
 }
 
-int			mandelbrot_grayscale(size_t iteration, t_fractol *ftol, double z2)
+int			color_grayscale(size_t iteration, t_fractol *ftol, double z2)
 {
 	double log_zn;
 	double smth;
@@ -189,11 +189,11 @@ int			mandelbrot_grayscale(size_t iteration, t_fractol *ftol, double z2)
 	log_zn = log(z2) / 2;
 	if (log_zn <= 0)
 		log_zn = 1;
-	smth = iteration - log2(log_zn) + ftol->mandelbrot->log2_log_h;
-	return ((int)(255 * smth / ftol->mandelbrot->max_iterations) * 0x10101 & 0x00ffffff);
+	smth = iteration - log2(log_zn) + ftol->data->log2_log_h;
+	return ((int)(255 * smth / ftol->data->final_iterations) * 0x10101 & 0x00ffffff);
 }
 
-int			mandelbrot_color(size_t iteration, t_fractol *ftol, double z2)
+int			color_color(size_t iteration, t_fractol *ftol, double z2)
 {
 	double	log_zn;
 	double	smth;
@@ -202,21 +202,21 @@ int			mandelbrot_color(size_t iteration, t_fractol *ftol, double z2)
 	log_zn = log(z2) / 2;
 	if (log_zn <= 0)
 		log_zn = 1;
-	smth = iteration - log2(log_zn) + ftol->mandelbrot->log2_log_h;
+	smth = iteration - log2(log_zn) + ftol->data->log2_log_h;
 
 	t_color color1;
 	t_color color2;
 	double	f;
 
-	if (ftol->options & OPTION_MANDELBROT_ANIMATED)
+	if (ftol->options & OPTION_ANIMATED)
 	{
 		smth += ftol->color_cycle;
 	}
 
-	smth = pow(smth, 0.4);
+	smth = pow(smth, 0.45);
 
-	color1 = ftol->mandelbrot->palette[(int)smth % PALETTE];
-	color2 = ftol->mandelbrot->palette[((int)smth + 1) % PALETTE];
+	color1 = ftol->data->palette[(int)smth % PALETTE];
+	color2 = ftol->data->palette[((int)smth + 1) % PALETTE];
 
 	f = fmod(smth, 1.f);
 	c[0] = color1[0] + f * (color2[0] - color1[0]);
@@ -226,19 +226,22 @@ int			mandelbrot_color(size_t iteration, t_fractol *ftol, double z2)
 	return (ret);
 }
 
-void		mandelbrot(t_fractol *ftol, t_ushort sx, t_ushort sy)
+void		render(t_fractol *ftol, t_ushort sx, t_ushort sy)
 {
 	size_t	iteration;
 	size_t	z2;
 
 	iteration = 0;
-	z2 = mandelbrot_escape_time(&iteration, sx, sy, ftol->mandelbrot);
-	if (iteration >= ftol->mandelbrot->max_iterations)
+	z2 = ftol->data->escape_time(&iteration, sx, sy, ftol->data);
+	if (iteration >= ftol->data->final_iterations)
 		ftol->img_data[sx + sy * ftol->size_line_int] = 0x0;
-	else if (ftol->options & OPTION_MANDELBROT_STEPWISE)
-		ftol->img_data[sx + sy * ftol->size_line_int] = mandelbrot_stepwise(iteration);
-	else if (ftol->options & OPTION_MANDELBROT_GRAYSCALE)
-		ftol->img_data[sx + sy * ftol->size_line_int] = mandelbrot_grayscale(iteration, ftol, z2);
-	else if (ftol->options & OPTION_MANDELBROT_COLOR)
-		ftol->img_data[sx + sy * ftol->size_line_int] = mandelbrot_color(iteration, ftol, z2);
+	else if (ftol->options & OPTION_STEPWISE)
+		ftol->img_data[sx + sy * ftol->size_line_int] =
+			color_stepwise(iteration);
+	else if (ftol->options & OPTION_GRAYSCALE)
+		ftol->img_data[sx + sy * ftol->size_line_int] =
+			color_grayscale(iteration, ftol, z2);
+	else if (ftol->options & OPTION_COLOR)
+		ftol->img_data[sx + sy * ftol->size_line_int] =
+			color_color(iteration, ftol, z2);
 }

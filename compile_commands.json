@@ -1491,26 +1491,6 @@
    "-I./minilibx_mms_20191025_beta",
    "-c",
    "-o",
-   "objs/mandelbrot.o",
-   "srcs/mandelbrot.c"
-  ],
-  "file": "srcs/mandelbrot.c"
- },
- {
-  "directory": "/Users/secondfry/school21/school21-fractol",
-  "arguments": [
-   "clang",
-   "-Wall",
-   "-Wextra",
-   "-O3",
-   "-funroll-loops",
-   "-MMD",
-   "-MP",
-   "-I./includes",
-   "-I./libft",
-   "-I./minilibx_mms_20191025_beta",
-   "-c",
-   "-o",
    "objs/utilities.o",
    "srcs/utilities.c"
   ],
@@ -1575,5 +1555,45 @@
    "srcs/loop_hooks_2.c"
   ],
   "file": "srcs/loop_hooks_2.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/render.o",
+   "srcs/render.c"
+  ],
+  "file": "srcs/render.c"
+ },
+ {
+  "directory": "/Users/secondfry/school21/school21-fractol",
+  "arguments": [
+   "clang",
+   "-Wall",
+   "-Wextra",
+   "-O3",
+   "-funroll-loops",
+   "-MMD",
+   "-MP",
+   "-I./includes",
+   "-I./libft",
+   "-I./minilibx_mms_20191025_beta",
+   "-c",
+   "-o",
+   "objs/loop_hooks_3.o",
+   "srcs/loop_hooks_3.c"
+  ],
+  "file": "srcs/loop_hooks_3.c"
  }
 ]

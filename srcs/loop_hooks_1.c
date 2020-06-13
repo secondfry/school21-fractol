@@ -11,13 +11,15 @@ int		loop_hook(t_fractol *ftol)
 {
 	loop_mandelbrot_palette(ftol);
 	loop_fractol(ftol);
+	loop_render_hud_1(ftol);
+	loop_render_hud_2(ftol);
 	loop_before_next_update(ftol);
 	return (0);
 }
 
 void	loop_mandelbrot_palette(t_fractol *ftol)
 {
-	if (!(ftol->options & OPTION_MANDELBROT_ANIMATED))
+	if (!(ftol->options & OPTION_ANIMATED))
 		return;
 	ftol->color_cycle += 1;
 	ftol->flags |= FLAG_REDRAW;
@@ -37,25 +39,24 @@ void	loop_fractol(t_fractol *ftol)
 		x = 0;
 		while (x < WIDTH)
 		{
-			mandelbrot(ftol, x, y);
+			render(ftol, x, y);
 			x++;
 		}
 		y++;
 	}
-	ftol->flags -= FLAG_REDRAW;
+	mlx_put_image_to_window(ftol->mlx, ftol->win, ftol->img, 0, 0);
 }
 
 void	loop_before_next_update(t_fractol *ftol)
 {
-	mlx_put_image_to_window(ftol->mlx, ftol->win, ftol->img, 0, 0);
 	mlx_do_sync(ftol->mlx);
-	if (ftol->options & OPTION_MANDELBROT_ANIMATED)
+	if (ftol->options & FLAG_REDRAW)
+		ftol->flags -= FLAG_REDRAW;
+	if (ftol->options & OPTION_ANIMATED)
 		ftol->flags |= FLAG_REDRAW;
 }
 
-#include <stdio.h>
-
-void	calculate_offset(t_mandelbrot *mandelbrot, int mouseX, int mouseY)
+void	calculate_offset(t_ftol_data *mandelbrot, int mouseX, int mouseY)
 {
 	mandelbrot->ox += (double)mouseX * (mandelbrot->kx - mandelbrot->zoom);
 	mandelbrot->oy += (double)(HEIGHT - mouseY) * (mandelbrot->ky + mandelbrot->zoom);
@@ -65,12 +66,13 @@ void	calculate_offset(t_mandelbrot *mandelbrot, int mouseX, int mouseY)
 
 int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol)
 {
-	mousecode == MOUSE_WHEEL_OUT ? ftol->mandelbrot->zoom *= 1.2 : 0;
-	mousecode == MOUSE_WHEEL_OUT ? ftol->mandelbrot->max_iterations-- : 0;
-	mousecode == MOUSE_WHEEL_IN ? ftol->mandelbrot->zoom *= 0.8 : 0;
-	mousecode == MOUSE_WHEEL_IN ? ftol->mandelbrot->max_iterations++ : 0;
-	ftol->mandelbrot->max_iterations < 1 ? ftol->mandelbrot->max_iterations = 1 : 0;
-	calculate_offset(ftol->mandelbrot, x, y);
+	mousecode == MOUSE_WHEEL_OUT ? ftol->data->zoom *= 1.1 : 0;
+	mousecode == MOUSE_WHEEL_OUT ? ftol->data->zoom_iterations-- : 0;
+	mousecode == MOUSE_WHEEL_IN ? ftol->data->zoom *= 0.9 : 0;
+	mousecode == MOUSE_WHEEL_IN ? ftol->data->zoom_iterations++ : 0;
+	ftol->data->zoom_iterations < 10 ? ftol->data->zoom_iterations = 10 : 0;
+	ftol->data->final_iterations = ftol->data->base_iterations + ftol->data->zoom_iterations;
+	calculate_offset(ftol->data, x, y);
 	ftol->flags |= FLAG_REDRAW;
 	return (0);
 }

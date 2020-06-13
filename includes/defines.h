@@ -28,8 +28,12 @@
 # define SSIZE_T_MIN (SSIZE_T_MAX + 1ul)
 
 # define PALETTE 3
-# define DEFAULT_HORIZON (1u << 16u)
-# define MAX_ITERATIONS 64
+# define DEFAULT_HORIZON (1u << 24u)
+# define MANDELBROT_BASE_ITERATIONS 50
+# define TRICORNE_BASE_ITERATIONS 150
+# define BURNING_BASE_ITERATIONS 14
+# define JULIA_BASE_ITERATIONS 250
+# define ZOOM_ITERATIONS 50
 
 # define EINVAL 22
 
@@ -37,7 +41,7 @@ typedef t_byte	*t_color;
 
 typedef int			(*t_mlx_hook)();
 
-typedef struct		s_mandelbrot
+typedef struct		s_ftol_data
 {
 	double			log2_log_h;
 	t_color			*palette;
@@ -47,8 +51,11 @@ typedef struct		s_mandelbrot
 	double			ky;
 	double			ox;
 	double			oy;
-	size_t			max_iterations;
-}					t_mandelbrot;
+	size_t			base_iterations;
+	size_t			zoom_iterations;
+	size_t			final_iterations;
+	double			(*escape_time)(size_t *, t_ushort, t_ushort, struct s_ftol_data *);
+}					t_ftol_data;
 
 typedef struct		s_fractol
 {
@@ -60,14 +67,14 @@ typedef struct		s_fractol
 	size_t			size_line_char;
 	t_byte			options;
 	t_byte			flags;
-	t_mandelbrot	*mandelbrot;
+	t_ftol_data		*data;
 	double			color_cycle;
 }					t_fractol;
 
-# define OPTION_MANDELBROT_STEPWISE		(1u << 0u)
-# define OPTION_MANDELBROT_GRAYSCALE	(1u << 1u)
-# define OPTION_MANDELBROT_COLOR		(1u << 2u)
-# define OPTION_MANDELBROT_ANIMATED		(1u << 3u)
+# define OPTION_STEPWISE	(1u << 0u)
+# define OPTION_GRAYSCALE	(1u << 1u)
+# define OPTION_COLOR		(1u << 2u)
+# define OPTION_ANIMATED	(1u << 3u)
 
 # define FLAG_REDRAW					(1u << 0u)
 

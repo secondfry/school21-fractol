@@ -9,7 +9,7 @@
 # include "mlx.h"
 # include "libft.h"
 # include "defines.h"
-# include "mandelbrot.h"
+# include "render.h"
 # include "color.h"
 
 int		loop_destroy_hook(void);
@@ -20,5 +20,7 @@ void	loop_fractol(t_fractol *ftol);
 void	loop_before_next_update(t_fractol *ftol);
 int		loop_mouse_click_hook(int mousecode, int x, int y, t_fractol *ftol);
 int		loop_mouse_move_hook(int x, int y, t_fractol *ftol);
+void	loop_render_hud_1(t_fractol *ftol);
+void	loop_render_hud_2(t_fractol *ftol);
 
 #endif
