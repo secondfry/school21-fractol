@@ -6,7 +6,7 @@
 /*   By: oadhesiv <oadhesiv@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/13 16:32:23 by oadhesiv          #+#    #+#             */
-/*   Updated: 2020/06/13 16:33:14 by oadhesiv         ###   ########.fr       */
+/*   Updated: 2020/06/14 19:44:51 by oadhesiv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 void	calculate_offset(t_ftol_data *data, int mx, int my)
 {
 	data->ox += (double)mx * (data->kx - data->zoom);
+#ifdef MLX_MACOS_METAL
 	data->oy += (double)(HEIGHT - my) * (data->ky + data->zoom);
+#else
+	data->oy += (double)my * (data->ky + data->zoom);
+#endif
 	data->kx = data->zoom;
 	data->ky = -1 * data->zoom;
 }
